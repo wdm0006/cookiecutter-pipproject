@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-VERSION = {{cookiecutter.version}}
+VERSION = '{{cookiecutter.version}}'
 
 here = path.abspath(path.dirname(__file__))
 
@@ -18,9 +18,9 @@ install_requires = [x.strip() for x in all_reqs if 'git+' not in x]
 dependency_links = [x.strip().replace('git+', '') for x in all_reqs if 'git+' not in x]
 
 setup(
-    name={{cookiecutter.app_name}},
+    name='{{cookiecutter.app_name}}',
     version=VERSION,
-    description={{cookiecutter.project_short_description}},
+    description='{{cookiecutter.project_short_description}}',
     long_description=long_description,
     url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}',
     license='BSD',
@@ -32,8 +32,8 @@ setup(
     keywords='',
     packages=find_packages(exclude=['docs', 'tests*']),
     include_package_data=True,
-    author={{cookiecutter.full_name}},
+    author='{{cookiecutter.full_name}}',
     install_requires=install_requires,
     depedency_links=dependency_links,
-    author_email={{cookiecutter.email}}
+    author_email='{{cookiecutter.email}}'
 )
