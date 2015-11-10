@@ -23,7 +23,7 @@ setup(
     description='{{cookiecutter.project_short_description}}',
     long_description=long_description,
     url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}',
-    download_url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}/tarball/{{cookiecutter.version}}',
+    download_url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}/tarball/' + VERSION,
     license='BSD',
     classifiers=[
       'Development Status :: 3 - Alpha',
