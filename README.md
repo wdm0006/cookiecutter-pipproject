@@ -17,6 +17,14 @@ Using CookieCutter for your project
 You will be asked about your basic info (name, project name, app name, etc.). This info will be used in your new project.
 
 
+Publishing your project to pypi
+-------------------------------
+
+There are two ways to publish your project:
+
+ * the manual way, outlined [here](http://www.willmcginnis.com/2015/11/12/create-a-pip-installable-python-package-in-2-minutes/)
+ * and with pypi-publisher [ppp](https://github.com/wdm0006/pypi-publisher)
+ 
 Goals
 -----
 
