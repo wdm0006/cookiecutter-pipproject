@@ -29,12 +29,16 @@ Goals
 -----
 
 The goal of this project is simply to take some of the boiler plate out of creating a new python project. It is intended
-to stay pretty minimal, but will eventually contain everything needed to make a project that includes:
+to stay pretty minimal, but contains everything needed to make a project that includes:
 
  * Sphinx documentation
  * Installable via pip in pypi
  * Testing via Nose and Coverage
- * Any other appropriate tooling for a medium sized project
+
+In the future, we may include some other things like:
+
+ * basic travic ci configuration
+ * anything else you think might make sense (open up an issue with ideas).
  
 Contributing
 ------------
