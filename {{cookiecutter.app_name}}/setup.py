@@ -22,6 +22,7 @@ setup(
     version=__version__,
     description='{{cookiecutter.project_short_description}}',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}',
     download_url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}/tarball/' + __version__,
     license='BSD',
