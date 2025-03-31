@@ -1,0 +1,70 @@
+name: Documentation Issue
+description: Report an issue or suggest an improvement in the documentation
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to help us improve the documentation!
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of documentation issue
+      description: What type of documentation issue is this?
+      options:
+        - Error or bug in existing documentation
+        - Missing documentation
+        - Unclear documentation
+        - Documentation improvement suggestion
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Documentation location
+      description: Where is the documentation you're referring to? (URL or file path)
+      placeholder: "e.g., docs/api.rst or https://{{cookiecutter.app_name}}.readthedocs.io/en/latest/api.html"
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please describe the issue or suggestion in detail.
+      placeholder: |
+        For errors: What is incorrect?
+        For missing docs: What needs to be documented?
+        For unclear docs: What is confusing or needs clarification?
+        For improvements: What would make the documentation better?
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested fix
+      description: If you have a specific suggestion for how to fix or improve the documentation, please provide it here.
+      render: rst
+      placeholder: |
+        Example documentation:
+        ```rst
+        API Reference
+        =============
+
+        .. automodule:: {{cookiecutter.app_name}}
+           :members:
+           :undoc-members:
+           :show-inheritance:
+        ```
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this documentation issue, you agree to follow our [Code of Conduct](../CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true 
