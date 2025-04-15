@@ -1,4 +1,7 @@
-name: Test
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: "Test Suite and Linting"
 
 on:
   push:
@@ -9,33 +12,29 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
-
-    steps:
-    - uses: actions/checkout@v4
     
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
-        
+        python-version: '3.10'
+    
     - name: Install uv
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
-        
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+    
     - name: Install dependencies
       run: |
-        uv pip install -e ".[dev]"
-        
+        uv pip install --system -e ".[dev]"
+    
     - name: Run tests
       run: |
-        make test-cov
-        
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage.xml
-        flags: unittests 
+        make test
+    
+    - name: Run linting
+      run: |
+        make lint

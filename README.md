@@ -16,8 +16,6 @@ A modern, production-ready cookiecutter template for Python packages that follow
 - **[pytest](https://docs.pytest.org/)**: Modern testing framework
 - **[tox](https://tox.wiki/)**: Automated testing across Python versions
 - **[Coverage.py](https://coverage.readthedocs.io/)**: Code coverage tracking
-- Configured for both unit and integration tests
-- Test fixtures and helpers included
 
 ### 📝 Code Quality Tools
 - **[ruff](https://github.com/astral-sh/ruff)**: Ultra-fast Python linter and formatter
@@ -33,8 +31,6 @@ A modern, production-ready cookiecutter template for Python packages that follow
 - **[Sphinx](https://www.sphinx-doc.org/)**: Professional documentation generator
 - **ReadTheDocs** theme
 - Automatic API documentation
-- Versioned documentation support
-- Example documentation included
 
 ### 🔄 CI/CD Automation
 - **GitHub Actions** workflows for:
@@ -42,9 +38,6 @@ A modern, production-ready cookiecutter template for Python packages that follow
   - Code quality checks
   - Documentation builds
   - Automated PyPI releases
-  - Security scanning
-- **Codecov** integration for coverage reporting
-- Automated dependency updates
 
 ### 🤝 Community & Contribution Tools
 - Structured issue templates for:
@@ -52,10 +45,6 @@ A modern, production-ready cookiecutter template for Python packages that follow
   - Feature requests
   - Documentation improvements
 - Pull request template
-- Contributing guidelines
-- Code of conduct
-- Security policy
-- Support resources
 
 ### 🛠️ Development Workflow
 - **Makefile** with common development commands:
@@ -67,9 +56,6 @@ A modern, production-ready cookiecutter template for Python packages that follow
   make docs          # Build documentation
   make clean         # Clean build artifacts
   ```
-- **pre-commit** hooks for code quality
-- VS Code/PyCharm configurations
-- Debug configurations
 
 ## Quick Start
 
@@ -104,61 +90,6 @@ A modern, production-ready cookiecutter template for Python packages that follow
    # Build docs
    make docs
    ```
-
-## Why These Tools?
-
-### Modern Packaging (pyproject.toml + hatch + uv)
-- **Why**: Traditional `setup.py` is being phased out in favor of declarative configuration
-- **Benefits**: 
-  - Cleaner, more maintainable package configuration
-  - Faster, more reliable dependency resolution
-  - Better reproducibility
-  - Improved build isolation
-
-### Code Quality (ruff + mypy)
-- **Why**: Python's dynamic nature requires strong tooling to catch issues early
-- **Benefits**:
-  - Catch bugs before they reach production
-  - Maintain consistent code style
-  - Improve code maintainability
-  - Speed up code reviews
-  - Ultra-fast performance (Rust-based tools)
-
-### Testing (pytest + tox)
-- **Why**: Comprehensive testing across environments is crucial for libraries
-- **Benefits**:
-  - Ensure compatibility across Python versions
-  - Isolate tests from system dependencies
-  - Parallel test execution
-  - Rich plugin ecosystem
-
-### CI/CD (GitHub Actions)
-- **Why**: Automation is key to maintaining quality and velocity
-- **Benefits**:
-  - Catch issues early
-  - Ensure quality on every change
-  - Automate releases
-  - Reduce manual work
-  - Build trust with users
-
-### Documentation (Sphinx)
-- **Why**: Good documentation is crucial for library adoption
-- **Benefits**:
-  - Professional-looking documentation
-  - API documentation from docstrings
-  - Versioned documentation
-  - Search functionality
-  - Multiple output formats
-
-## Template Updates
-
-This template is actively maintained and regularly updated with the latest Python best practices. Key updates include:
-
-- 🔄 Regular dependency version updates
-- 🔒 Security patches and updates
-- 🛠️ New tool integrations
-- 📚 Documentation improvements
-- 🐛 Bug fixes
 
 ## Contributing
 

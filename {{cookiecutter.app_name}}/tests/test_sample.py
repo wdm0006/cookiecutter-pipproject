@@ -1,4 +1,4 @@
-# Sample Test passing with nose and pytest
+# Sample Test passing with pytess
 
 def test_pass():
-        assert True, "dummy sample test"
+        assert True
