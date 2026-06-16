@@ -1,4 +1,6 @@
-# Sample Test passing with pytess
+"""Sample test module."""
+
 
 def test_pass():
-        assert True
+    """Sample test that always passes."""
+    assert True
