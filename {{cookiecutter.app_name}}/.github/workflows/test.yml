@@ -1,4 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# This workflow installs dependencies, tests supported Python versions, and runs quality checks.
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
 name: "Test Suite and Linting"
@@ -12,7 +12,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+    strategy:
+      matrix:
+        python-version: ['3.12', '3.14']
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -20,7 +23,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
 
     - name: Install uv
       uses: astral-sh/setup-uv@v5
@@ -32,7 +35,26 @@ jobs:
     - name: Run tests
       run: |
         make test
-    
+
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.14'
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+
+    - name: Install dependencies
+      run: |
+        uv pip install --system -e ".[dev]"
+
     - name: Run linting
       run: |
         make lint
