@@ -1,11 +1,15 @@
 """Regression tests for rendering the Cookiecutter template."""
 
 import configparser
+import importlib
+import os
+import sys
 import tempfile
 import tomllib
 import unittest
 from pathlib import Path
 
+from cookiecutter.exceptions import FailedHookException
 from cookiecutter.main import cookiecutter
 
 
@@ -77,6 +81,76 @@ class TemplateRenderTest(unittest.TestCase):
             self.assertIn("twine check dist/*", workflow)
             self.assertIn("dist/*.whl", workflow)
             self.assertIn('-c "import mypippkg"', workflow)
+
+
+class AppNameValidationTest(unittest.TestCase):
+    """Verify the pre-generation hook guards the app_name contract."""
+
+    def _reject(self, app_name: str) -> str:
+        """Render with app_name, assert it fails, and return the hook's output."""
+        template_dir = Path(__file__).resolve().parents[1]
+
+        with (
+            tempfile.TemporaryDirectory() as output_dir,
+            tempfile.TemporaryFile(mode="w+") as captured,
+        ):
+            sys.stderr.flush()
+            saved_stderr = os.dup(2)
+            os.dup2(captured.fileno(), 2)
+            try:
+                with self.assertRaises(FailedHookException):
+                    cookiecutter(
+                        str(template_dir),
+                        no_input=True,
+                        output_dir=output_dir,
+                        extra_context={"app_name": app_name},
+                    )
+            finally:
+                sys.stderr.flush()
+                os.dup2(saved_stderr, 2)
+                os.close(saved_stderr)
+
+            self.assertEqual(list(Path(output_dir).iterdir()), [])
+            captured.seek(0)
+            return captured.read()
+
+    def test_custom_identifier_renders_importable_package(self) -> None:
+        """Accept a custom identifier and import the package it generates."""
+        template_dir = Path(__file__).resolve().parents[1]
+        app_name = "custom_pkg"
+
+        with tempfile.TemporaryDirectory() as output_dir:
+            project_dir = Path(
+                cookiecutter(
+                    str(template_dir),
+                    no_input=True,
+                    output_dir=output_dir,
+                    extra_context={"app_name": app_name},
+                )
+            )
+            config = tomllib.loads((project_dir / "pyproject.toml").read_text())
+
+            self.assertEqual(config["project"]["name"], app_name)
+            sys.path.insert(0, str(project_dir))
+            importlib.invalidate_caches()
+            try:
+                package = importlib.import_module(app_name)
+                self.assertEqual(
+                    Path(package.__file__).parent, project_dir / app_name
+                )
+            finally:
+                sys.path.remove(str(project_dir))
+                sys.modules.pop(app_name, None)
+                importlib.invalidate_caches()
+
+    def test_invalid_app_names_fail_generation(self) -> None:
+        """Reject names that cannot be imported or published as written."""
+        for app_name in ("my-package", "my package", "123pkg", "class", "pürepy"):
+            with self.subTest(app_name=app_name):
+                message = self._reject(app_name)
+
+                self.assertIn(repr(app_name), message)
+                self.assertIn("valid Python identifier", message)
 
 
 if __name__ == "__main__":
