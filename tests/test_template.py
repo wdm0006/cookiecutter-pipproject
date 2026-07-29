@@ -60,6 +60,24 @@ class TemplateRenderTest(unittest.TestCase):
                 for unsupported in ("'3.8'", "'3.9'", "'3.10'", "'3.11'"):
                     self.assertNotIn(unsupported, workflow_text)
 
+    def test_default_render_builds_and_verifies_release_artifacts(self) -> None:
+        """Build both distributions and verify them before publication."""
+        template_dir = Path(__file__).resolve().parents[1]
+
+        with tempfile.TemporaryDirectory() as output_dir:
+            project_dir = Path(
+                cookiecutter(str(template_dir), no_input=True, output_dir=output_dir)
+            )
+            workflow = (
+                project_dir / ".github" / "workflows" / "publish.yml"
+            ).read_text()
+
+            self.assertIn("python -m build\n", workflow)
+            self.assertNotIn("python -m build --sdist", workflow)
+            self.assertIn("twine check dist/*", workflow)
+            self.assertIn("dist/*.whl", workflow)
+            self.assertIn('-c "import mypippkg"', workflow)
+
 
 if __name__ == "__main__":
     unittest.main()

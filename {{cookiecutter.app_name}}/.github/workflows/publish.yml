@@ -34,7 +34,7 @@ jobs:
           uv pip install -e ".[dev]"
           uv pip install build
       
-      - name: Build source distribution
+      - name: Build distributions
         run: |
           # Clean the build directories first
           rm -rf build/
@@ -46,8 +46,18 @@ jobs:
           find . -path ./.venv -prune -o -name '*.egg' -type f -exec rm -f {} \; 2>/dev/null || true
           find . -path ./.venv -prune -o -name '__pycache__' -type d -exec rm -rf {} \; 2>/dev/null || true
           
-          # Build only the source distribution
-          python -m build --sdist
+          # Build the source and wheel distributions
+          python -m build
+
+      - name: Check distributions
+        run: twine check dist/*
+
+      - name: Verify wheel
+        run: |
+          uv venv .wheel-venv
+          uv pip install --python .wheel-venv/bin/python dist/*.whl
+          cd "$(mktemp -d)"
+          "$GITHUB_WORKSPACE/.wheel-venv/bin/python" -c "import {{cookiecutter.app_name}}"
       
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
